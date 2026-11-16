@@ -1,0 +1,33 @@
+name: Build and Deploy .NET Application
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v4
+
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build application
+      run: dotnet build --configuration Release --no-restore
+
+    - name: Publish application
+      run: dotnet publish SQR.API/SQR.API.csproj --configuration Release --output ./published --no-build
+
+    - name: Deploy to server (ejemplo de despliegue)
+      run: |
+        echo "Despliegue simulado correctamente en ./published"
+        ls -la ./published
