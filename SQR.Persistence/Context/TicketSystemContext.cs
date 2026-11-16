@@ -28,8 +28,12 @@ public partial class TicketSystemContext : DbContext
     public virtual DbSet<UserRole> UserRoles { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseMySql("server=localhost;database=ticket_system;uid=root;pwd=tecsup", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.42-mysql"));
+{
+    if (!optionsBuilder.IsConfigured)
+    {
+        optionsBuilder.UseMySql("Server=mysql-c3aae39-tecsup-fac6.c.aivencloud.com;Port=20631;Database=defaultdb;User=avnadmin;Password=AVNS_1o_9MKlBlA3jm23kiCj;SslMode=Required;", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.42-mysql"));
+    }
+}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
